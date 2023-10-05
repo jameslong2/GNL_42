@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *s)
 {
 	size_t	l;
 
@@ -16,7 +16,7 @@ size_t	ft_strlen(const char *s)
 	return (l);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcpy(char *dst,char *src, size_t dstsize)
 {
 	size_t	i;
 	size_t	h[3];
@@ -24,7 +24,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	h[0] = ft_strlen(src);
 	h[1] = ft_strlen(dst);
 	i = 0;
-	if (dstsize == 0)
+	if (dstsize == 0 || !src)
 		return (h[0]);
 	while (src[i] && i < dstsize -1)
 	{
@@ -35,7 +35,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (h[0]);
 }
 
-void	initjoin(char const *s1, char const *s2, size_t *i)
+void	initjoin(char *s1, char *s2, size_t *i)
 {
 	i[0] = 0;
 	i[1] = 0;
@@ -57,9 +57,9 @@ char	*ft_strjoin(char *s1, char *s2, int fre)
 	if (tmp == 0)
 		return (0);
 	else if (ft_strlen(s1)  == 0 && ft_strlen(s2) > 0)
-		ft_strlcpy(tmp, (const char *)s2, (size_t)ft_strlen(s2) +1);
+		ft_strlcpy(tmp, s2, (size_t)ft_strlen(s2) +1);
 	else if (ft_strlen(s2) == 0 && ft_strlen(s1)>0)
-		ft_strlcpy(tmp, (const char *)s1, (size_t)ft_strlen(s1)+1);
+		ft_strlcpy(tmp, s1, (size_t)ft_strlen(s1)+1);
 	else if (ft_strlen(s1) > 0 && ft_strlen(s2) > 0)
 	{
 		while (i[0] < i[3])
@@ -79,12 +79,12 @@ char	*ft_strjoin(char *s1, char *s2, int fre)
 	}
 	if (og && fre == 1)
 		free(og);
-	if (dos)
+	if (dos && (fre == 0 || fre == 1))
 		free(dos);
 	return (tmp);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	size_t	i;
 
