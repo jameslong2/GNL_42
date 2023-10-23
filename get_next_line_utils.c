@@ -43,16 +43,12 @@ void	initjoin(char *s1, char *s2, size_t *i)
 	i[3] = ft_strlen(s1) + ft_strlen(s2);
 }
 
-char	*ft_strjoin(char *s1, char *s2, int fre)
+char	*ft_strjoin(char *s1, char *s2, char *tofree)
 {
 	char	*tmp;
 	size_t		i[4];
-	char	*og;
-	char	*dos;
 
 	initjoin(s1, s2, i);
-	og = s1;
-	dos = s2;
 	tmp = (char *)ft_calloc((i[3]+1), sizeof(char));
 	if (tmp == 0)
 		return (0);
@@ -77,10 +73,11 @@ char	*ft_strjoin(char *s1, char *s2, int fre)
 		free(tmp);
 		return (0);
 	}
-	if (og && fre == 1)
-		free(og);
-	if (dos && (fre == 0 || fre == 1))
-		free(dos);
+	if (tofree)
+	{
+		free(tofree);
+		tofree = 0;
+	}
 	return (tmp);
 }
 
